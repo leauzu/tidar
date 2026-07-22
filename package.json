@@ -1,0 +1,19 @@
+{
+  "name": "tidar-website-astro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check:links": "python tools/validate_site.py"
+  },
+  "dependencies": {
+    "astro": "^7.1.3"
+  },
+  "engines": {
+    "node": ">=22.12.0"
+  }
+}
