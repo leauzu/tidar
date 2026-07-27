@@ -1,0 +1,779 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+<BaseLayout title={"Visi & Misi — TIDAR"} description={"Visi dan Misi TIDAR"} bodyClass={"inner-page logo-page"} extraCss={["/pages.css"]}>
+<Fragment slot="head">
+<style is:global>
+
+    :root {
+      --vm-red: #d7151b;
+      --vm-red-dark: #9f0f14;
+      --vm-gold: #e0a11b;
+      --vm-bg: #f3f1ee;
+      --vm-paper: #ffffff;
+      --vm-text: #141414;
+      --vm-muted: #5f646d;
+      --vm-line: rgba(20, 20, 20, 0.09);
+      --vm-shadow: 0 18px 55px rgba(20, 20, 20, 0.08);
+      --vm-radius-xl: 32px;
+      --vm-radius-lg: 24px;
+      --vm-radius-md: 18px;
+      --vm-max: 1220px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Manrope", system-ui, sans-serif;
+      color: var(--vm-text);
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,.86), transparent 40%),
+        linear-gradient(180deg, #f7f5f2 0%, var(--vm-bg) 100%);
+    }
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+
+    .vm-page {
+      width: 100%;
+      max-width: none;
+      margin: 0;
+      padding: 0 0 56px;
+    }
+
+    .vm-stack { display: grid; gap: 28px; }
+
+    /* Keep the shared Makna Lambang hero truly edge-to-edge, while the
+       Visi & Misi content below follows the wider internal-page shell. */
+    .vm-page > :not(.ml-hero) {
+      width: min(calc(100% - 64px), 1320px);
+      margin-inline: auto;
+    }
+
+    .vm-card,
+    .vm-panel,
+    .vm-mission-item,
+    .vm-pillars,
+    .vm-cta {
+      background: var(--vm-paper);
+      border: 1px solid rgba(255,255,255,0.9);
+      box-shadow: var(--vm-shadow);
+    }
+
+    .vm-hero {
+      position: relative;
+      overflow: hidden;
+      border-radius: 34px;
+      background: var(--vm-paper);
+      box-shadow: var(--vm-shadow);
+      display: grid;
+      grid-template-columns: minmax(300px, 4.8fr) minmax(340px, 6fr);
+      min-height: 445px;
+    }
+
+    .vm-hero::after {
+      content: "";
+      position: absolute;
+      inset: auto 0 0 0;
+      height: 8px;
+      background: linear-gradient(90deg, var(--vm-gold), #f4b737 45%, #ef9a0b 100%);
+      z-index: 3;
+    }
+
+    .vm-hero-copy {
+      position: relative;
+      z-index: 2;
+      background: linear-gradient(160deg, #e1161d 0%, var(--vm-red) 58%, #8f090e 100%);
+      color: #fff;
+      padding: 36px 34px 42px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 34px 150px 150px 34px;
+      min-width: 0;
+    }
+
+    .vm-hero-copy::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 24% 22%, rgba(255,255,255,.12), transparent 20%),
+        radial-gradient(circle at 88% 10%, rgba(255,255,255,.08), transparent 18%),
+        radial-gradient(circle at 10% 86%, rgba(255,255,255,.08), transparent 22%);
+      pointer-events: none;
+    }
+
+    .vm-hero-copy::after {
+      content: "";
+      position: absolute;
+      left: 20px;
+      bottom: 22px;
+      width: 64px;
+      height: 64px;
+      background-image: radial-gradient(rgba(240,175,28,.9) 1.6px, transparent 1.6px);
+      background-size: 12px 12px;
+      opacity: .9;
+    }
+
+    .vm-kicker {
+      margin: 0 0 16px;
+      font-size: 1rem;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: #ffd24d;
+    }
+
+    .vm-title,
+    .vm-section-title {
+      margin: 0;
+      font-family: "Barlow Condensed", Impact, sans-serif;
+      text-transform: uppercase;
+      letter-spacing: .01em;
+      line-height: .94;
+    }
+
+    .vm-title {
+      font-size: clamp(3.2rem, 6vw, 6.2rem);
+      max-width: 320px;
+      text-wrap: balance;
+    }
+
+    .vm-underline {
+      width: 70px;
+      height: 5px;
+      margin: 22px 0 20px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #ffd24d 0%, #f2b11b 100%);
+    }
+
+    .vm-hero-copy p:last-child {
+      margin: 0;
+      font-size: clamp(1.12rem, 1.55vw, 1.65rem);
+      line-height: 1.6;
+      max-width: 365px;
+      text-wrap: pretty;
+    }
+
+    .vm-hero-media {
+      position: relative;
+      min-height: 100%;
+      background: #ddd center/cover no-repeat;
+      background-image: linear-gradient(180deg, rgba(255,255,255,.04), rgba(0,0,0,.15)), url('/assets/IMG-20250817-WA0063-800x600.jpg');
+    }
+
+    .vm-hero-media::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(15,15,15,.22) 0%, rgba(15,15,15,.05) 20%, transparent 42%);
+    }
+
+    .vm-vision-grid {
+      display: grid;
+      grid-template-columns: minmax(280px, 4.2fr) minmax(320px, 5.8fr);
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .vm-panel {
+      border-radius: 28px;
+      overflow: hidden;
+      padding: 28px;
+    }
+
+    .vm-copy .vm-kicker-secondary,
+    .vm-section-heading .vm-kicker-secondary,
+    .vm-pillars-heading {
+      margin: 0 0 10px;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: var(--vm-red);
+    }
+
+    .vm-section-title {
+      font-size: clamp(3.4rem, 5vw, 4.7rem);
+      color: #111;
+    }
+
+    .vm-copy p:last-child,
+    .vm-section-heading p,
+    .vm-pillars-card p,
+    .vm-mission-text {
+      margin: 0;
+      font-size: 1.12rem;
+      line-height: 1.65;
+      color: #20242a;
+    }
+
+    .vm-copy .vm-underline-small,
+    .vm-section-heading .vm-underline-small {
+      width: 66px;
+      height: 4px;
+      margin: 18px 0 16px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #f3bf3e 0%, #d99c15 100%);
+    }
+
+    .vm-visual-card {
+      position: relative;
+      min-height: 340px;
+      border-radius: 28px;
+      overflow: hidden;
+      padding: 0;
+      background: #e9e5df;
+      isolation: isolate;
+    }
+
+    .vm-visual-card::before {
+      content: "";
+      position: absolute;
+      left: 20px;
+      bottom: 20px;
+      z-index: 3;
+      width: 78px;
+      height: 58px;
+      border-radius: 12px;
+      background-color: rgba(255,255,255,.86);
+      background-image: radial-gradient(rgba(224,161,27,.95) 1.7px, transparent 1.7px);
+      background-size: 11px 11px;
+      box-shadow: 0 10px 28px rgba(20,20,20,.10);
+      backdrop-filter: blur(4px);
+    }
+
+    .vm-visual-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(180deg, transparent 58%, rgba(18,18,18,.14) 100%);
+    }
+
+    .vm-visual-photo {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      min-height: 340px;
+      object-fit: cover;
+      object-position: center;
+      filter: saturate(1.02) contrast(1.02);
+    }
+
+    .vm-mission {
+      display: grid;
+      gap: 18px;
+      padding: 30px;
+      border-radius: 28px;
+      background: rgba(255,255,255,.72);
+      box-shadow: var(--vm-shadow);
+    }
+
+    .vm-section-top {
+      display: grid;
+      grid-template-columns: minmax(160px, 170px) 1fr;
+      gap: 22px;
+      align-items: end;
+    }
+
+    .vm-section-heading p {
+      max-width: 830px;
+    }
+
+    .vm-mission-list {
+      display: grid;
+      gap: 14px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .vm-mission-item {
+      display: grid;
+      grid-template-columns: 58px 92px 1fr;
+      align-items: center;
+      gap: 18px;
+      min-width: 0;
+      padding: 16px 18px;
+      border-radius: 20px;
+    }
+
+    .vm-badge {
+      width: 58px;
+      height: 58px;
+      border-radius: 16px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #f51c24, #c80712);
+      color: #fff;
+      font-family: "Barlow Condensed", Impact, sans-serif;
+      font-size: 2rem;
+      line-height: 1;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 10px 18px rgba(215,21,27,.16);
+    }
+
+    .vm-icon-wrap {
+      width: 74px;
+      height: 74px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(180deg, #fffaf0, #faf7ef);
+      border: 1px solid rgba(224,161,27,.16);
+      color: var(--vm-gold);
+      position: relative;
+    }
+
+    .vm-icon-wrap::after {
+      content: "";
+      position: absolute;
+      right: -10px;
+      top: 12px;
+      bottom: 12px;
+      width: 1px;
+      background: var(--vm-line);
+    }
+
+    .vm-icon-wrap svg {
+      width: 34px;
+      height: 34px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.9;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .vm-pillar-icon svg {
+      width: 74px;
+      height: 74px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.45;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .vm-mission-text {
+      min-width: 0;
+      font-weight: 600;
+      text-wrap: pretty;
+    }
+
+    .vm-pillars {
+      padding: 28px 24px 30px;
+      border-radius: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .vm-pillars::after {
+      content: "";
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 60px;
+      height: 48px;
+      opacity: .42;
+      background-image: radial-gradient(rgba(224,161,27,1) 1.5px, transparent 1.5px);
+      background-size: 11px 11px;
+    }
+
+    .vm-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .vm-pillars-card {
+      position: relative;
+      padding: 18px 18px 0;
+      text-align: center;
+      min-width: 0;
+    }
+
+    .vm-pillars-card:not(:first-child)::before {
+      content: "";
+      position: absolute;
+      left: -9px;
+      top: 18px;
+      bottom: 18px;
+      width: 1px;
+      background: var(--vm-line);
+    }
+
+    .vm-pillar-icon {
+      width: 86px;
+      height: 86px;
+      margin: 0 auto 14px;
+      border-radius: 999px;
+      display: grid;
+      place-items: center;
+      color: var(--vm-gold);
+    }
+
+    .vm-pillars-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.02rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+    }
+
+    .vm-pillars-card p {
+      font-size: .97rem;
+      color: #2e3238;
+    }
+
+    .vm-cta {
+      position: relative;
+      overflow: hidden;
+      border-radius: 28px;
+      display: grid;
+      grid-template-columns: 1fr;
+      align-items: stretch;
+      background: linear-gradient(135deg, #e6151d 0%, #cc0f17 56%, #96070d 100%);
+      color: #fff;
+    }
+
+    .vm-cta::after {
+      content: "";
+      position: absolute;
+      right: 16px;
+      bottom: 18px;
+      width: 72px;
+      height: 72px;
+      background-image: radial-gradient(rgba(240,175,28,.92) 1.5px, transparent 1.5px);
+      background-size: 11px 11px;
+      opacity: .92;
+    }
+
+    .vm-cta-media {
+      position: relative;
+      min-height: 300px;
+      overflow: hidden;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,.14), rgba(255,255,255,0) 55%),
+        radial-gradient(circle at 58% 38%, rgba(255,255,255,.26), transparent 38%),
+        linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,0));
+    }
+
+    .vm-cta-media::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(224,22,29,0) 0 44%, rgba(224,22,29,.18) 100%),
+        linear-gradient(160deg, transparent 0 18%, rgba(255,255,255,.16) 18% 34%, transparent 34% 100%);
+    }
+
+    .vm-cta-flag {
+      position: absolute;
+      left: 52px;
+      top: 18px;
+      width: 220px;
+      height: 150px;
+      background: linear-gradient(180deg, #d8111b 0 50%, #fff 50% 100%);
+      clip-path: polygon(0 0, 93% 12%, 100% 54%, 90% 100%, 0 100%, 12% 50%);
+      filter: drop-shadow(0 8px 20px rgba(0,0,0,.18));
+      opacity: .97;
+    }
+
+    .vm-cta-media img {
+      position: absolute;
+      left: 18px;
+      bottom: 0;
+      width: min(94%, 310px);
+      height: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 18px 30px rgba(0,0,0,.18));
+    }
+
+    .vm-cta--visual-only .vm-cta-media {
+      min-height: 300px;
+    }
+
+    @media (max-width: 1080px) {
+      .vm-page { width: 100%; }
+      .vm-hero {
+        grid-template-columns: 1fr;
+        min-height: unset;
+      }
+      .vm-hero-copy {
+        border-radius: 32px 32px 0 0;
+        padding-bottom: 30px;
+      }
+      .vm-hero-copy::after { left: 22px; bottom: 16px; }
+      .vm-hero-media { min-height: 360px; }
+      .vm-vision-grid,
+      .vm-cta,
+      .vm-section-top {
+        grid-template-columns: 1fr;
+      }
+      .vm-cta-media { min-height: 250px; }
+      .vm-pillars-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
+      .vm-pillars-card:nth-child(4)::before,
+      .vm-pillars-card:nth-child(5)::before { display: none; }
+    }
+
+    @media (max-width: 820px) {
+      .vm-page { width: 100%; padding-top: 0; }
+      .vm-page > :not(.ml-hero) { width: calc(100% - 32px); }
+      .vm-stack { gap: 20px; }
+      .vm-hero,
+      .vm-panel,
+      .vm-mission,
+      .vm-pillars,
+      .vm-cta { border-radius: 24px; }
+      .vm-hero-copy {
+        padding: 24px 22px 34px;
+        border-radius: 24px 24px 0 0;
+      }
+      .vm-title { font-size: clamp(3.2rem, 16vw, 5.5rem); max-width: none; }
+      .vm-hero-copy p:last-child,
+      .vm-copy p:last-child,
+      .vm-section-heading p,
+      .vm-mission-text,
+      .vm-pillars-card p { font-size: 1rem; }
+      .vm-hero-media { min-height: 250px; }
+      .vm-panel { padding: 22px 18px; }
+      .vm-visual-card { min-height: 250px; }
+      .vm-visual-photo { min-height: 250px; }
+      .vm-mission { padding: 22px 16px; }
+      .vm-section-top { gap: 12px; }
+      .vm-section-title { font-size: clamp(2.95rem, 14vw, 4.2rem); }
+      .vm-mission-item {
+        grid-template-columns: 52px 64px 1fr;
+        gap: 14px;
+        padding: 14px;
+      }
+      .vm-badge { width: 52px; height: 52px; font-size: 1.9rem; border-radius: 14px; }
+      .vm-icon-wrap { width: 60px; height: 60px; }
+      .vm-icon-wrap::after { right: -8px; top: 8px; bottom: 8px; }
+      .vm-icon-wrap svg { width: 28px; height: 28px; }
+      .vm-pillar-icon svg { width: 74px; height: 74px; }
+      .vm-pillars { padding: 24px 18px 28px; }
+      .vm-pillars-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 10px; }
+      .vm-pillars-card { padding: 14px 10px 10px; }
+      .vm-pillars-card::before { display: none !important; }
+      .vm-pillar-icon { width: 86px; height: 86px; margin-bottom: 10px; }
+      .vm-pillars-card h3 { font-size: .95rem; }
+      .vm-pillars-card p { font-size: .9rem; }
+      .vm-cta { grid-template-columns: 1fr; }
+      .vm-cta-media,
+      .vm-cta--visual-only .vm-cta-media { min-height: 230px; }
+      .vm-cta-flag { left: 30px; width: 170px; height: 118px; }
+      .vm-cta-media img { width: min(86%, 235px); }
+    }
+
+    @media (max-width: 520px) {
+      .vm-page { width: 100%; padding-bottom: 28px; }
+      .vm-page > :not(.ml-hero) { width: calc(100% - 16px); }
+      .vm-hero-copy { padding: 20px 18px 28px; }
+      .vm-kicker,
+      .vm-copy .vm-kicker-secondary,
+      .vm-section-heading .vm-kicker-secondary,
+      .vm-pillars-heading { font-size: .92rem; }
+      .vm-title { font-size: clamp(2.9rem, 14vw, 4.7rem); }
+      .vm-hero-copy p:last-child { max-width: none; font-size: 1rem; }
+      .vm-hero-media { min-height: 224px; background-position: center; }
+      .vm-panel { padding: 20px 16px; }
+      .vm-visual-card { min-height: 210px; }
+      .vm-visual-photo { min-height: 210px; }
+      .vm-visual-card::before { left: 14px; bottom: 14px; width: 68px; height: 50px; }
+      .vm-visual-photo { min-height: 210px; }
+      .vm-mission { padding: 18px 12px; }
+      .vm-mission-item {
+        grid-template-columns: 48px 52px minmax(0,1fr);
+        gap: 9px;
+        align-items: center;
+        padding: 12px 18px 12px 12px;
+      }
+      .vm-badge { width: 48px; height: 52px; font-size: 1.7rem; border-radius: 12px; }
+      .vm-icon-wrap { width: 50px; height: 50px; }
+      .vm-icon-wrap::after { right: -5px; top: 7px; bottom: 7px; }
+      .vm-mission-text { font-size: .93rem; line-height: 1.55; }
+      .vm-pillars-grid { grid-template-columns: 1fr; gap: 12px; }
+      .vm-pillars-card {
+        text-align: left;
+        padding: 12px 0 6px;
+        display: grid;
+        grid-template-columns: 86px 1fr;
+        gap: 12px;
+        align-items: start;
+      }
+      .vm-pillar-icon { margin: 0; width: 86px; height: 86px; }
+      .vm-pillars-card p { margin-top: 6px; }
+      .vm-pillars-card .vm-pillar-text { min-width: 0; }
+      .vm-cta-media,
+      .vm-cta--visual-only .vm-cta-media { min-height: 190px; }
+      .vm-cta-flag { left: 20px; top: 14px; width: 136px; height: 98px; }
+      .vm-cta-media img { left: 8px; width: min(82%, 188px); }
+    }
+
+    @media (max-width: 380px) {
+      .vm-mission-item {
+        grid-template-columns: 44px 46px minmax(0,1fr);
+        gap: 7px;
+        padding-right: 14px;
+      }
+      .vm-badge { width: 44px; height: 48px; font-size: 1.55rem; }
+      .vm-icon-wrap { width: 44px; height: 44px; }
+      .vm-icon-wrap svg { width: 25px; height: 25px; }
+      .vm-mission-text { font-size: .875rem; }
+    }
+  
+</style>
+</Fragment>
+<main class="vm-page vm-stack" id="main"><section aria-labelledby="mlHeroTitle" class="ml-hero">
+<div aria-hidden="true" class="ml-hero-shape">
+<svg focusable="false" preserveaspectratio="none" viewbox="0 0 1600 560">
+<defs>
+<lineargradient id="mlHeroRedGradient" x1="0" x2="1" y1="0" y2="1">
+<stop offset="0" stop-color="#ef101c"></stop>
+<stop offset="0.48" stop-color="#e20d19"></stop>
+<stop offset="1" stop-color="#c80712"></stop>
+</lineargradient>
+<pattern height="22" id="mlHeroDotPattern" patternunits="userSpaceOnUse" width="22">
+<circle cx="3" cy="3" fill="#ffffff" fill-opacity="0.14" r="1.7"></circle>
+</pattern>
+</defs>
+<path class="ml-hero-shape-red" d="M0 0H1145C1112 105 1075 215 1028 326C975 450 905 535 760 560H0Z" fill="url(#mlHeroRedGradient)"></path>
+<path class="ml-hero-shape-dots" d="M0 0H1145C1112 105 1075 215 1028 326C975 450 905 535 760 560H0Z" fill="url(#mlHeroDotPattern)"></path>
+<path class="ml-hero-shape-edge" d="M1145 0C1112 105 1075 215 1028 326C975 450 905 535 760 560" fill="none"></path>
+</svg>
+</div>
+<div aria-hidden="true" class="ml-hero-ribbons"></div>
+<div aria-hidden="true" class="ml-hero-dots"></div>
+<div class="ml-hero-inner">
+<div class="ml-hero-copy">
+<p class="ml-eyebrow">Tentang Organisasi</p>
+<h1 class="ml-hero-title" id="mlHeroTitle"><span>Visi</span><span>&amp; Misi</span></h1>
+<div aria-hidden="true" class="ml-hero-rule"></div>
+<p class="ml-hero-lead">Arah perjuangan TIDAR dalam membangun generasi muda yang berkarakter, berdaya, dan berdedikasi bagi Indonesia.</p>
+</div>
+<figure class="ml-garuda-panel">
+<img alt="Garuda Pancasila, lambang negara Republik Indonesia" decoding="async" fetchpriority="high" height="1042" src="/assets/garuda-pancasila-authentic.webp" width="960"/>
+<figcaption class="ml-garuda-caption"><span>Lambang Negara</span><span>Republik Indonesia</span></figcaption>
+</figure>
+</div>
+</section>
+<section aria-labelledby="visi-title" class="vm-vision-grid">
+<article class="vm-panel vm-copy">
+<p class="vm-kicker-secondary">Visi TIDAR</p>
+<h2 class="vm-section-title" id="visi-title">Visi</h2>
+<div aria-hidden="true" class="vm-underline-small"></div>
+<p>Menjadi Organisasi Kepemudaan yang mampu menyelamatkan masa depan Indonesia dengan membangkitkan semangat Nasionalisme berdasarkan Pancasila dan UUD 1945.</p>
+</article>
+<aside aria-label="Visual identitas TIDAR" class="vm-panel vm-visual-card">
+<img alt="Kader TIDAR" class="vm-visual-photo" decoding="async" loading="lazy" src="/assets/tidar-kaderisasi.webp"/>
+</aside>
+</section>
+<section aria-labelledby="misi-title" class="vm-mission">
+<div class="vm-section-top">
+<div class="vm-section-heading">
+<p class="vm-kicker-secondary">Misi TIDAR</p>
+<h2 class="vm-section-title" id="misi-title">Misi</h2>
+</div>
+<div class="vm-section-heading">
+<p>Lima arah kerja organisasi untuk membentuk pemuda berkarakter, berdaya, dan berdedikasi bagi Indonesia.</p>
+</div>
+</div>
+<ol class="vm-mission-list">
+<li class="vm-mission-item">
+<span class="vm-badge">01</span>
+<span aria-hidden="true" class="vm-icon-wrap">
+<svg viewbox="0 0 24 24"><path d="M5 20V4"></path><path d="M6 5h10l-2 3 2 3H6"></path></svg>
+</span>
+<p class="vm-mission-text">Menumbuhkan kesadaran politik dan kebangsaan di kalangan pemuda untuk membangun Indonesia.</p>
+</li>
+<li class="vm-mission-item">
+<span class="vm-badge">02</span>
+<span aria-hidden="true" class="vm-icon-wrap">
+<svg viewbox="0 0 24 24"><circle cx="12" cy="7" r="3.2"></circle><path d="M5.5 20c.9-3.4 3.4-5.5 6.5-5.5s5.6 2.1 6.5 5.5"></path><path d="M6.5 11.8l-1.8 2.2M17.5 11.8l1.8 2.2"></path></svg>
+</span>
+<p class="vm-mission-text">Melahirkan pemimpin bangsa yang bermoral tinggi, berkarakter, bermartabat, berintegritas, terampil, peka, serta memiliki jiwa nasionalis, religius dan pluralis.</p>
+</li>
+<li class="vm-mission-item">
+<span class="vm-badge">03</span>
+<span aria-hidden="true" class="vm-icon-wrap">
+<svg viewbox="0 0 24 24"><path d="M3 9.5 12 5l9 4.5-9 4.5L3 9.5Z"></path><path d="M7 11.5V16c0 1.4 2.2 3 5 3s5-1.6 5-3v-4.5"></path><path d="M21 9.5v6"></path></svg>
+</span>
+<p class="vm-mission-text">Membangun kesejahteraan bangsa dengan memberikan pelatihan dan pendidikan kepada pemuda/pemudi untuk mengelola, mengembangkan dan melestarikan anugerah yang dimiliki Indonesia.</p>
+</li>
+<li class="vm-mission-item">
+<span class="vm-badge">04</span>
+<span aria-hidden="true" class="vm-icon-wrap">
+<svg viewbox="0 0 24 24"><path d="M12 3c1.9 2.1 2.6 4.1 2.1 5.9-.3 1.2-1.1 2.2-2.1 3.1-1-.9-1.8-1.9-2.1-3.1C9.4 7.1 10.1 5.1 12 3Z"></path><path d="M8.5 12.4h7"></path><path d="M7 16h10"></path><path d="M5.5 20h13"></path></svg>
+</span>
+<p class="vm-mission-text">Mengamalkan, melestarikan dan menjaga kebudayaan Indonesia.</p>
+</li>
+<li class="vm-mission-item">
+<span class="vm-badge">05</span>
+<span aria-hidden="true" class="vm-icon-wrap">
+<svg viewbox="0 0 24 24"><path d="M4 20h16"></path><path d="M7 20v-5"></path><path d="M12 20V9"></path><path d="M17 20v-8"></path><path d="M20 7l-3.5 3.5-3-2L8 14"></path><path d="M18 7h2v2"></path></svg>
+</span>
+<p class="vm-mission-text">Mewujudkan ekonomi kerakyatan yang bertumpu pada kekuatan bangsa yang mengarahkan pada kedaulatan dan kemandirian bangsa.</p>
+</li>
+</ol>
+</section>
+<section aria-labelledby="pilar-title" class="vm-pillars">
+<p class="vm-pillars-heading" id="pilar-title">Pilar Perjuangan TIDAR</p>
+<div class="vm-pillars-grid">
+<article class="vm-pillars-card">
+<div aria-hidden="true" class="vm-pillar-icon">
+<svg viewbox="0 0 24 24"><path d="M12 3 18.5 5v5.7c0 4.5-2.8 7.5-6.5 9.3-3.7-1.8-6.5-4.8-6.5-9.3V5L12 3Z"></path><path d="m12 8.1 1.1 2.2 2.4.3-1.8 1.7.4 2.4L12 13.5l-2.1 1.2.4-2.4-1.8-1.7 2.4-.3L12 8.1Z"></path></svg>
+</div>
+<div class="vm-pillar-text">
+<h3>Nasionalisme</h3>
+<p>Menjunjung tinggi Pancasila dan UUD 1945 sebagai fondasi perjuangan.</p>
+</div>
+</article>
+<article class="vm-pillars-card">
+<div aria-hidden="true" class="vm-pillar-icon">
+<svg viewbox="0 0 24 24"><path d="M12 20s-7-4.3-7-9.4A4.4 4.4 0 0 1 12 7a4.4 4.4 0 0 1 7 3.6C19 15.7 12 20 12 20Z"></path></svg>
+</div>
+<div class="vm-pillar-text">
+<h3>Karakter</h3>
+<p>Membentuk pribadi berintegritas, bermoral, dan berjiwa kepemimpinan.</p>
+</div>
+</article>
+<article class="vm-pillars-card">
+<div aria-hidden="true" class="vm-pillar-icon">
+<svg viewbox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 0 1 6.5 4H20v14H6.5A2.5 2.5 0 0 0 4 20.5Z"></path><path d="M4 6.5A2.5 2.5 0 0 1 6.5 9H20"></path><path d="M12 4v14"></path></svg>
+</div>
+<div class="vm-pillar-text">
+<h3>Pendidikan</h3>
+<p>Mengembangkan pengetahuan dan keterampilan untuk kemajuan bangsa.</p>
+</div>
+</article>
+<article class="vm-pillars-card">
+<div aria-hidden="true" class="vm-pillar-icon">
+<svg viewbox="0 0 24 24"><circle cx="7.5" cy="8" r="2.5"></circle><circle cx="16.5" cy="8" r="2.5"></circle><path d="M3.5 18c.6-2.8 2.4-4.5 4-4.5s3.4 1.7 4 4.5"></path><path d="M12.5 18c.6-2.8 2.4-4.5 4-4.5s3.4 1.7 4 4.5"></path></svg>
+</div>
+<div class="vm-pillar-text">
+<h3>Kebudayaan</h3>
+<p>Melestarikan nilai-nilai budaya Indonesia sebagai identitas dan kekuatan bangsa.</p>
+</div>
+</article>
+<article class="vm-pillars-card">
+<div aria-hidden="true" class="vm-pillar-icon">
+<svg viewbox="0 0 24 24"><path d="M4 20h16"></path><path d="M6 20V10"></path><path d="M12 20V5"></path><path d="M18 20v-7"></path></svg>
+</div>
+<div class="vm-pillar-text">
+<h3>Ekonomi Kerakyatan</h3>
+<p>Mendorong kemandirian ekonomi untuk kesejahteraan masyarakat.</p>
+</div>
+</article>
+</div>
+</section>
+</main>
+</BaseLayout>
