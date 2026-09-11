@@ -1,2 +1,0 @@
-import type { MetadataRoute } from "next";
-export default function sitemap():MetadataRoute.Sitemap{const base="https://www.tidar.or.id";const routes=["/","/tentang-tidar","/profil","/visi-misi","/tugas-fungsi","/makna-lambang","/dokumen-resmi","/profil-pimpinan","/profil-pimpinan/rahayu-saraswati-djojohadikusumo","/struktur-organisasi","/pengurus-pusat"];return routes.map(url=>({url:`${base}${url}`,lastModified:new Date(),changeFrequency:url==="/"?"weekly":"monthly",priority:url==="/"?1:.8}))}
